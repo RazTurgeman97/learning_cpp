@@ -15,7 +15,7 @@ int main(){
     std::string std_str1 = "Hi everybody! ";
     std::string std_str2 = "How's the going?";
 
-    strncat(array_str1, array_str2, LENGTH1);
+    strncat(array_str1, array_str2, LENGTH1); // this wil concatenate one array to another (destination array, added array, destination length)
     std::cout << array_str1 << std::endl;
     std::cout << std_str1 + std_str2 << std::endl;
 

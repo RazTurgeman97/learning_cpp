@@ -12,6 +12,7 @@ std::string Student::get_name() const{
     return name;
 }
 
+
 Course::Course(int the_id, std::string the_name, unsigned char the_credits){
     id = the_id;
     name = the_name;
@@ -42,6 +43,7 @@ int Grade::get_course_id() const{
 char Grade::get_grade() const{
     return grade;
 }
+
 
 void StudentRecords::add_student(int sid, std::string sname){
     students.push_back(Student(sid, sname));
@@ -90,7 +92,6 @@ float StudentRecords::get_GPA(int sid) const{
     float points = 0.0f, credits = 0.0f;
     for (const Grade& grd : grades)
         if (grd.get_student_id() == sid){
-            // calculate total credits and points
             unsigned char current_credits = get_course_credits(grd.get_course_id());
             credits += current_credits;
             points += get_num_grade(grd.get_grade()) * current_credits;
@@ -98,17 +99,25 @@ float StudentRecords::get_GPA(int sid) const{
     return (points / credits);
 }
 
-std::string StudentRecords::get_course_name(int cid) const{
+std::string StudentRecords::get_course_name(int cid) const{ // Challenge aid function implementation
     int j = 0;
     while (j < courses.size() && courses[j].get_id() != cid)
         j++;
     return courses[j].get_name();
 }
+// Note that the sequential search is not the best search algorithm out there. The code could definitely do better.
+// We're doing this mostly because we're using plain vectors.
+// The standard template library comes with a variety of containers among which we will certainly find the most suitable for your applications.
 
-void StudentRecords::report_card(int sid){
+void StudentRecords::report_card(int sid) const{ // Challenge function implementation
+
+    // Based on get_GPA function
+
     float points = 0.0f, credits = 0.0f;
-    std::cout << std::endl << "Report Card for " << get_student_name(sid) << std::endl;
-    for (Grade& grd : grades)
+
+    std::cout << std::endl << "Report Card for " << get_student_name(sid) << ":" << std::endl;
+
+    for (const Grade& grd : grades)
         if (grd.get_student_id() == sid){
             std::cout << get_course_name(grd.get_course_id()) << ": " << grd.get_grade() << std::endl;
             unsigned char current_credits = get_course_credits(grd.get_course_id());
